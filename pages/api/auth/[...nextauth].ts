@@ -24,7 +24,7 @@ export default async function hanlder(
         },
         async authorize(credentials) {
           const validEmail = credentials?.email === "admin@example.com";
-          const validPassword = credentials?.password === "password";
+          const validPassword = credentials?.password === "@Password123";
           if (!validEmail || !validPassword) {
             throw new Error("Invalid Email or Password");
           }
@@ -36,7 +36,6 @@ export default async function hanlder(
         },
       }),
     ],
-    secret: process.env.NEXTAUTH_SECRET,
     session: {
       strategy: "jwt",
     },

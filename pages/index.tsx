@@ -8,8 +8,8 @@ const HomePage: NextPage = () => {
       <div className="grid place-content-center min-h-screen">
         <div className="flex flex-col items-center">
           <h1 className="text-4xl my-8">Welcome to NextJS DaisyUI Starter</h1>
-          <Link className="btn btn-primary" href="/dashboard">
-            Go to Dashboard
+          <Link className="btn btn-primary" href="/admin">
+            Go to Admin
           </Link>
         </div>
       </div>
