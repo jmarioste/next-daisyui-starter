@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
-
+import users from "data/users.json";
 if (!process.env.NEXTAUTH_SECRET) {
   throw new Error(
     "please provide process.env.NEXTAUTH_SECRET environment variable"
@@ -23,16 +23,17 @@ export default async function hanlder(
           password: { label: "Password", type: "password" },
         },
         async authorize(credentials) {
-          const validEmail = credentials?.email === "admin@example.com";
-          const validPassword = credentials?.password === "@Password123";
-          if (!validEmail || !validPassword) {
-            throw new Error("Invalid Email or Password");
+          const user = users.find((user) => {
+            return (
+              credentials?.email === user.email &&
+              credentials.password === user.password
+            );
+          });
+
+          if (!user) {
+            throw new Error("Invalid email or password");
           }
-          return {
-            email: "admin@example.com",
-            id: "random_id",
-            name: "WebAdmin",
-          };
+          return user;
         },
       }),
     ],
@@ -41,6 +42,21 @@ export default async function hanlder(
     },
     pages: {
       signIn: "/signin",
+    },
+    callbacks: {
+      async jwt({ token, user }) {
+        if (user) {
+          token.role = user.role;
+        }
+        return token;
+      },
+      session({ session, token }) {
+        console.log("session", session);
+        if (token && session.user) {
+          session.user.role = token.role;
+        }
+        return session;
+      },
     },
   });
 }
