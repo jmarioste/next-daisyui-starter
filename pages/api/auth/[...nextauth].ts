@@ -39,5 +39,8 @@ export default async function hanlder(
     session: {
       strategy: "jwt",
     },
+    pages: {
+      signIn: "/signin",
+    },
   });
 }
