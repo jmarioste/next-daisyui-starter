@@ -34,6 +34,25 @@ const SignInPage = () => {
         <div className="flex flex-col items-center card shadow-md">
           <form className="card-body w-96" onSubmit={handleSubmit}>
             <h1 className="text-4xl my-8">Sign In</h1>
+            <div>
+              You can use the following credentials:
+              <p className="font-bold">Admin</p>
+              <pre>
+                {JSON.stringify(
+                  { "email:": "admin@example.com", password: "@Password123" },
+                  null,
+                  4
+                )}
+              </pre>
+              <p className="font-bold">Normal User</p>
+              <pre>
+                {JSON.stringify(
+                  { "email:": "user@example.com", password: "@Password123" },
+                  null,
+                  4
+                )}
+              </pre>
+            </div>
             {!!error && <p className="text-error">ERROR: {error}</p>}
             <input
               type="text"
