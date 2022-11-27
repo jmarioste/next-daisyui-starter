@@ -1,27 +1,10 @@
-import { getToken } from "next-auth/jwt";
-import { NextRequest, NextResponse } from "next/server";
+import withAuthorization from "middlewares/withAuthorization";
+import { NextMiddleware, NextResponse } from "next/server";
 
-//paths that require authentication / authorization
-const requireAuth: string[] = ["/admin"];
-
-export async function middleware(request: NextRequest) {
+const mainMiddleware: NextMiddleware = (request) => {
   const res = NextResponse.next();
-  const pathname = request.nextUrl.pathname;
-
-  if (requireAuth.some((path) => pathname.startsWith(path))) {
-    const token = await getToken({ req: request });
-    //check not logged in
-    if (!token) {
-      const url = new URL(`/api/auth/signin`, request.url);
-      url.searchParams.set("redirectUrl", encodeURI(request.url));
-      return NextResponse.redirect(url);
-    }
-
-    //check if not authorized
-    if (token.role !== "admin") {
-      const url = new URL(`/403`, request.url);
-      return NextResponse.rewrite(url);
-    }
-  }
+  //other middleware operations
   return res;
-}
+};
+
+export default withAuthorization(mainMiddleware, ["/admin"]);

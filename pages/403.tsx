@@ -9,9 +9,12 @@ const Custom403: NextPage = () => {
     <div className="container">
       <div className="grid place-content-center min-h-screen">
         <div className="flex flex-col items-center">
-          <h1 className="text-4xl my-8">403 - Unauthorized</h1>
-          <Link className="btn btn-primary" href="/">
-            Go to Index
+          <div className="my-4 text-center">
+            <h1 className="text-4xl">403 - Unauthorized</h1>
+            <p className="">Please login as admin</p>
+          </div>
+          <Link className="btn btn-primary" href="/signin">
+            Login
           </Link>
 
           <div className="card shadow-md">
